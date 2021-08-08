@@ -2,12 +2,27 @@ package treapHW;
 import java.util.Random;
 import java.util.Stack;
 
-//BENJAMIN GRIEPP
-//I PLEDGE MY HONOR I HAVE I ABIDED BY STEVENS HONOR SYSTEM
 /**
  * @author Benjamin Griepp
  *
- * @param <E>
+ * Grade: 100/100
+ * 
+ * Treap is a data structure in the form of a Binary Search Tree (BST) that maintains heap priorites
+ * 
+ * Nodes of BST have both a key and a priority:
+ * Keys determine position within BST (whether a node would be a left or right child of a parent)
+ * Priorities determine nodes height within BST (higher priority is closer to the root, root is always highest priority)
+ * 
+ * Treap structure is accomplished by placing a node into BST standardly (moving left of node if less, right if greater, placing when leaf)
+ * 
+ * After Node is placed, heap priority is enforced by moving through parent nodes (previously stored as references in stack when placing node in BST)
+ * If the parent priority is lower than the placed child node, rotations (right or left) are performed to place child higher than parent
+ * with the keys of nodes in mind in order to maintain BST stucture
+ * Parents above the rotated nodes (stored in stack) are checked as well to perform more rotations if necessary
+ * 
+ * As well, nodes are able to be deleted by appropriately rotating nodes to bottom of tree and removing node
+ * 
+ * I pledge my honor I have abided by the Stevens Honor System
  */
 public class Treap<E extends Comparable<E>> {
 	
@@ -196,7 +211,7 @@ public class Treap<E extends Comparable<E>> {
 		boolean left = false;
 		
 		
-		//find item using find
+		//Continuously uses find method until current is desired node
 		while(current.data != key) {
 			if(find(current.left, key)) {
 				parent = current;
@@ -210,22 +225,26 @@ public class Treap<E extends Comparable<E>> {
 			}
 		}
 		
+		//Case if deleted node is root
 		if(current == root) {
+
+			//Leaves current if no child nodes
 			if(current.left == null && current.right == null) {
 			}
 			else if(current.left==null) {
+				//Swap right if left null
 				tempParent = current.right;
 	            root = current.rotateLeft();
 	            parent = tempParent;
 	            left = true;
 	        }else if(current.right==null) {
-	            //swap left
+	            //Swarp left if right null
 	            tempParent = current.left;
 	            root = current.rotateRight();
 	            parent = tempParent;
 	            left = false;
 	        }else {
-	            //swap highest priority
+	            //Swaps node with highest priority if neither null
 	            if(current.left.priority<current.right.priority) {
 	                tempParent = current.right;
 	                root = current.rotateLeft();
@@ -240,11 +259,13 @@ public class Treap<E extends Comparable<E>> {
 	        }
 			}
 		
-		//rotate node to bottom
+		//Rotate node to bottom (not root case)
 		
 		while(!(current.left == null && current.right == null)) {
+			//Stops when no child nodes (at bottom of BST)
 			
 			if(current.left == null) {
+				//Swap right if left null
 				tempParent = current.right;
 				if(left) {
 					parent.left = current.rotateLeft();
@@ -256,6 +277,7 @@ public class Treap<E extends Comparable<E>> {
 				left = true;
 			}
 			else if(current.right == null) {
+				//Swap left is right null
 				tempParent = current.left;
 				if(left) {
 					parent.left = current.rotateRight();
@@ -267,6 +289,7 @@ public class Treap<E extends Comparable<E>> {
 				left = false;
 			}
 			else {
+				//Swaps node with highest priority if neither null
 				if(current.left.priority < current.right.priority) {
 					tempParent = current.right;
 					if(left) {
@@ -307,6 +330,7 @@ public class Treap<E extends Comparable<E>> {
 		return true;
 	}
 	private boolean find(Node<E> root, E key) {
+		//Recursively returns if node is within either right child or left child and their subsequent childs
 		if(root == null) {
 			return false;
 		}
