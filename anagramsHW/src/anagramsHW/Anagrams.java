@@ -68,15 +68,13 @@ public class Anagrams {
 	 * @return hashcode nondependent on character order
 	 */
 	public long myHashCode(String s) {
-		//Generates a unique hash recursively
+		//Generates a unique hash
 		if(s.equals("")) {
 			throw new IllegalArgumentException("myHashCode: empty string");
 		}
 		else if((s.substring(1,s.length())).equals("")) {
-			//Returns corresponding prime if no letters remain to multiply with recursive calls
 			return (long) letterTable.get(s.charAt(0));
 		}
-		//Returns corresponding prime of current letter multiply with a recursive call of myHashCode without current letter
 		return ((long) letterTable.get(s.charAt(0))) * this.myHashCode(s.substring(1,s.length()));
 	}
 	
