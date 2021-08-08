@@ -260,7 +260,6 @@ public class Treap<E extends Comparable<E>> {
 			}
 		
 		//Rotate node to bottom (not root case)
-		
 		while(!(current.left == null && current.right == null)) {
 			//Stops when no child nodes (at bottom of BST)
 			
