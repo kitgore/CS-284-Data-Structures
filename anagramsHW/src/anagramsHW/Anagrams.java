@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author Benjamin Griepp
  * 
- * Grade:
+ * Grade: 100/100
  * 
  * Sorts words into hashtable by their unsorted characters, finds the largest set of anagrams in a dictionary
  * 
